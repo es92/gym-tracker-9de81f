@@ -94,9 +94,12 @@ view. All workout data is strictly private per user.
   counts (time and weight-0 sets included — unlike strength levels,
   no bodyweight needed). Shown **alongside** strength levels, never
   replacing them: the Progress hub body map has a Strength/Frequency
-  toggle (`&freq=1` with `&progress=1` pre-selects Frequency for the
-  dapp.json checks), and the muscle drill-in carries a status line +
-  a dashed 10 sets/wk guideline on its weekly-sets chart.
+  toggle (`&freq=1` / `&strength=1` with `&progress=1` pre-select a
+  mode for the dapp.json checks — the hub itself still opens on
+  Frequency for a user with no bodyweight, so `&strength=1` is the
+  only URL that reaches the "Set your bodyweight" prompt), and the
+  muscle drill-in carries a status line + a dashed 10 sets/wk
+  guideline on its weekly-sets chart.
 - **Ownership checks join up to `workout_sessions.user_id`** and
   return 404 (not 403) for other users' rows.
 - The legacy `presses` table from the scaffold demo is unused — don't
@@ -128,6 +131,30 @@ view. All workout data is strictly private per user.
   input collapses the card so its backdrop can't eat taps invisibly.
   Notes (session, entry, set) wrap as paragraphs —
   `whitespace-pre-wrap break-words`, never `truncate`.
+- **Logging a set is optimistic** (issue #43): `onSetSubmit` never
+  awaits the network before painting. The new/edited row goes straight
+  into the local session payload with a negative temp id and
+  `pending: true` (rendered at `opacity-60`, `data-pending-set`), the
+  form closes, the rest timer arms, and the POST/PATCH settles in the
+  background (`setSaves`, `setSaveIds`). There is no re-fetch of the
+  session on the happy path — the server row replaces the temp one in
+  place via `replaceLocalSet`. On failure the row is rolled back (or
+  the pre-edit snapshot restored) and the form reopens with the draft
+  intact plus a plain-language message from `saveFailMessage`. Three
+  things keep temp ids safe: `settlePendingSets()` runs before any
+  action in `SETTLE_BEFORE` (edit, delete, leaving the screen),
+  `replaceLocalSet` migrates a temp id held by `pendingDelete` /
+  `openForm`, and `resolveSetId` is the fallback lookup. A second tap
+  is a no-op because `openForm` is cleared synchronously. Background
+  reconciles re-render through `rerenderInPlace`, which re-reads an
+  open form's draft first so a settling save cannot eat typing.
+- **Two automation hooks for the log-set checks**: `?session=latest`
+  opens the most recent session (a check cannot know row ids after
+  `ensureStagingUserData` copies the demo data under the tester), and
+  `&logset=1` submits `#set-form` once for real. `logset` is gated on
+  `isStaging`, which comes from the `staging` flag now returned by
+  `GET /api/settings` — it writes a set, so it must never run against
+  a production account. No feature is gated on that flag.
 - **JSON import/export** (`GET /api/export`, `POST /api/import`):
   format `gym-tracker-export` version 1 — portable, no DB ids,
   exercises referenced by name. Session objects carry `started_at`,

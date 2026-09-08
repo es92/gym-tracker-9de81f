@@ -41,7 +41,7 @@
     { "name": "Frequency mode shows the growth legend", "path": "/?demo=1&progress=1&freq=1", "expectText": "On track" },
     { "name": "Muscle drill-in shows the frequency status line", "path": "/?demo=1&muscle=chest", "expectText": "sets/wk" },
     { "name": "Demo chest frequency reads On track", "path": "/?demo=1&muscle=chest", "expectText": "On track" },
-    { "name": "Bodyweight prompt shows for a fresh user", "path": "/?progress=1", "expectText": "Set your bodyweight" },
+    { "name": "Bodyweight prompt shows for a fresh user", "path": "/?progress=1&strength=1", "expectText": "Set your bodyweight" },
     { "name": "Keyboard overlays viewport (resizes-visual)", "path": "/", "expectSelector": "meta[content*=\"resizes-visual\"]" },
     { "name": "Native kit stylesheet loads", "path": "/", "expectSelector": "link[href*=\"usernode-native\"]" },
     { "name": "Native kit script loads", "path": "/", "expectSelector": "script[src*=\"usernode-native\"]" },
@@ -58,7 +58,12 @@
     { "name": "Expanded rest timer offers Reset", "path": "/?demo=1&session=900002&rest=1", "expectSelector": "[data-action=\"rest-reset\"]" },
     { "name": "Expanded rest timer offers Cancel", "path": "/?demo=1&session=900002&rest=1", "expectSelector": "[data-action=\"rest-cancel\"]" },
     { "name": "Rest length dial renders", "path": "/?demo=1&session=900002&rest=1", "expectSelector": "[data-rest-dial]" },
-    { "name": "Rest timer defaults to a 2:00 target", "path": "/?demo=1&session=900002&rest=1", "expectText": "2:00" }
+    { "name": "Rest timer defaults to a 2:00 target", "path": "/?demo=1&session=900002&rest=1", "expectText": "2:00" },
+    { "name": "Set form offers the Log set button", "path": "/?demo=1&session=900002&addset=1", "expectText": "Log set" },
+    { "name": "Log set submit control renders", "path": "/?demo=1&session=900002&addset=1", "expectSelector": "#set-form button[type=\"submit\"]" },
+    { "name": "Logging a set arms the rest timer", "path": "/?session=latest&logset=1", "expectSelector": "#stopwatch[data-armed=\"1\"]" },
+    { "name": "Logged set row renders once the save settles", "path": "/?session=latest&logset=1", "expectSelector": "[data-swipe^=\"set:\"]" },
+    { "name": "Latest-session deep link opens a workout", "path": "/?session=latest", "expectText": "Add exercise" }
   ],
   "admins": [
     "evan"
