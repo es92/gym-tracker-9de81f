@@ -67,15 +67,15 @@
   })();
   </script>
   <title>Gym Tracker</title>
-  <script src="https://my.onhomeroom.com/usernode-tailwind/v1/tailwind.js"></script>
+  <script src="__USERNODE_PLATFORM_ORIGIN__/usernode-tailwind/v1/tailwind.js"></script>
   <script>tailwind.config = { darkMode: 'class', future: { hoverOnlyWhenSupported: true } }</script>
 
   <!-- usernode-native UI kit — centrally hosted, never vendored. Loading it
        sets html.un-ios / .un-android / .un-desktop and exposes
        window.unNative; every use below is guarded so the app still works
        (legacy markup + visible ✕ delete buttons) if these fail to load. -->
-  <link rel="stylesheet" href="https://my.onhomeroom.com/usernode-native/v1/native.css">
-  <script src="https://my.onhomeroom.com/usernode-native/v1/native.js"></script>
+  <link rel="stylesheet" href="__USERNODE_PLATFORM_ORIGIN__/usernode-native/v1/native.css">
+  <script src="__USERNODE_PLATFORM_ORIGIN__/usernode-native/v1/native.js"></script>
 
   <!-- usernode-bridge — centrally hosted, never vendored. Not optional and not
        conditional on calling a bridge API: it is also how this app ANSWERS the
@@ -84,7 +84,7 @@
        is what `.sheet { bottom: var(--un-kb-inset, 0px) }` below depends on —
        with no bridge that resolves to 0px and the sheets sit behind the
        on-screen keyboard. -->
-  <script src="https://my.onhomeroom.com/usernode-bridge/v1/bridge.js"></script>
+  <script src="__USERNODE_PLATFORM_ORIGIN__/usernode-bridge/v1/bridge.js"></script>
 
   <style>
     /* Without the kit, touch devices have no swipe gesture anymore, so the
